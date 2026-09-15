@@ -13,7 +13,8 @@ const catColors = {
 };
 
 export default function BlogCard({ blog, onDelete }) {
-  const date = new Date(blog.publishedDate || blog.createdAt).toLocaleDateString('en-US', {
+  if (!blog) return null;
+  const date = new Date(blog.publishedDate || blog.createdAt || Date.now()).toLocaleDateString('en-US', {
     month: 'short',
     day: 'numeric',
     year: 'numeric',
@@ -22,11 +23,11 @@ export default function BlogCard({ blog, onDelete }) {
   return (
     <article className="group bg-white border-2 border-ink-900 rounded-[24px] overflow-hidden shadow-hard hover:shadow-hard-lg hover:-translate-y-1 hover:-translate-x-1 transition-all duration-300 flex flex-col h-full relative">
       {/* top accent bar per category */}
-      <div className={`h-2 w-full ${catColors[blog.category]?.split(' ')[0] || 'bg-ink-900'}`} />
+      <div className={`h-2 w-full ${catColors[blog?.category]?.split(' ')[0] || 'bg-ink-900'}`} />
       <Link to={`/blogs/${blog._id}`} className="block overflow-hidden relative">
         <div className="absolute top-3 left-3 z-10 flex items-center gap-2">
-          <span className={`inline-flex px-3 py-1.5 rounded-full text-[11px] font-black uppercase tracking-widest border-2 border-ink-900 shadow-hard-sm ${catColors[blog.category] || 'bg-ink-900 text-white'}`}>
-            {blog.category}
+          <span className={`inline-flex px-3 py-1.5 rounded-full text-[11px] font-black uppercase tracking-widest border-2 border-ink-900 shadow-hard-sm ${catColors[blog?.category] || 'bg-ink-900 text-white'}`}>
+            {blog.category || 'General'}
           </span>
         </div>
         <div className="absolute top-3 right-3 z-10 w-9 h-9 bg-paper border-2 border-ink-900 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity -rotate-12 group-hover:rotate-0 duration-300">
