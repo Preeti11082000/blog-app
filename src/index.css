@@ -1,0 +1,66 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Space Grotesk', 'Inter', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  background: #FFFBF5;
+  color: #111111;
+}
+
+/* Paper texture */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  z-index: 9999;
+}
+
+::selection {
+  background: #FF4D2E;
+  color: white;
+}
+
+.prose p {
+  margin-bottom: 1.25em;
+  line-height: 1.8;
+  color: #1a1a1a;
+  font-family: 'Newsreader', serif;
+  font-size: 1.05rem;
+}
+
+/* Editorial utilities */
+.text-balance {
+  text-wrap: balance;
+}
+
+/* Hard shadow hover */
+.hard-card {
+  border: 2px solid #111;
+  box-shadow: 6px 6px 0 #111;
+  transition: all 0.2s ease;
+}
+.hard-card:hover {
+  box-shadow: 8px 8px 0 #111;
+  transform: translate(-2px, -2px);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #FFFBF5;
+}
+::-webkit-scrollbar-thumb {
+  background: #111;
+  border-radius: 999px;
+}
