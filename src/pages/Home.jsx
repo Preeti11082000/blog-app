@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { ArrowRight, ArrowUpRight, Sparkles, PenLine, BookOpen, Mail, Star, TrendingUp } from 'lucide-react';
+import { ArrowRight, ArrowUpRight, PenLine, Mail } from 'lucide-react';
 import useBlogs from '../hooks/useBlogs';
 import BlogGrid from '../components/BlogGrid';
 import { SkeletonGrid } from '../components/LoadingSpinner';
@@ -45,9 +45,9 @@ export default function Home() {
         <div className="relative w-full px-8 sm:px-12 lg:px-16 xl:px-24 2xl:px-32 py-10 sm:py-14 lg:py-16">
           <div className="grid lg:grid-cols-[1.35fr_0.85fr] gap-10 lg:gap-12 items-start">
             <div className="relative">
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-ink-900 text-white text-[11px] font-black uppercase tracking-widest rounded-full mb-5 border-2 border-ink-900 shadow-hard-sm rotate-[-1deg]">
+              {/* <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-ink-900 text-white text-[11px] font-black uppercase tracking-widest rounded-full mb-5 border-2 border-ink-900 shadow-hard-sm rotate-[-1deg]">
                 <Sparkles className="w-3.5 h-3.5 text-mustard" /> New: AI-assisted writing tips
-              </div>
+              </div> */}
               <h1 className="font-display font-black tracking-[-0.05em] leading-[0.86] text-[42px] sm:text-[62px] lg:text-[74px] xl:text-[84px]">
                 <span className="block">Ideas,</span>
                 <span className="block italic font-normal tracking-[-0.04em] text-zinc-400">Stories</span>
@@ -68,11 +68,7 @@ export default function Home() {
                   <PenLine className="w-4 h-4" /> Start Writing
                 </Link>
               </div>
-              <div className="flex flex-wrap items-center gap-5 mt-10 text-[12px] font-black uppercase tracking-widest">
-                <span className="flex items-center gap-2 bg-white border-2 border-ink-900 rounded-full px-3 py-1.5 shadow-hard-sm"><Star className="w-4 h-4 fill-mustard text-ink-900" /> 4.9 Rating</span>
-                <span className="flex items-center gap-2"><BookOpen className="w-4 h-4" /> 500+ Articles</span>
-                <span className="flex items-center gap-2"><TrendingUp className="w-4 h-4" /> Weekly Drops</span>
-              </div>
+
             </div>
 
             {/* Right editorial stack */}
@@ -125,7 +121,7 @@ export default function Home() {
                 <img src={cat.icon} alt={cat.name} className="w-6 h-6 object-contain" loading="lazy" />
               </div>
               <p className={`text-sm font-black mt-2 ${cat.text}`}>{cat.name}</p>
-              <p className={`text-[11px] font-bold uppercase tracking-widest opacity-70 ${cat.text}`}>Explore →</p>
+
             </Link>
           ))}
         </div>
