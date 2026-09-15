@@ -169,8 +169,8 @@ export default function Home() {
       <section className="w-full px-8 sm:px-12 lg:px-16 xl:px-24 2xl:px-32 py-10">
         <div className="flex flex-wrap items-end justify-between gap-4 mb-6">
           <div>
-            <p className="text-[11px] font-black uppercase tracking-[0.18em] text-accent">Curated • Vol II</p>
-            <h2 className="font-display font-black text-[28px] sm:text-[34px] tracking-[-0.03em] leading-none">Featured Articles <span className="font-normal italic text-zinc-400">— editor’s choice</span></h2>
+           
+            <h2 className="font-display font-black text-[28px] sm:text-[34px] tracking-[-0.03em] leading-none">Featured Articles </h2>
           </div>
           <Link to="/blogs" className="inline-flex items-center gap-2 bg-ink-900 text-white px-5 py-2.5 rounded-full font-black uppercase tracking-widest text-xs border-2 border-ink-900 shadow-hard-sm">See all <ArrowUpRight className="w-4 h-4" /></Link>
         </div>
