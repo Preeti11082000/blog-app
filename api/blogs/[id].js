@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import { connectDB } from '../../lib/mongodb.js';
 import Blog from '../../models/Blog.js';
+import { getInMemoryBlogs } from '../../lib/inMemoryStore.js';
 
 function setCors(res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -32,18 +33,26 @@ export default async function handler(req, res) {
 
   const { id } = req.query;
 
-  if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(400).json({ success: false, message: 'Invalid blog ID' });
-  }
-
+  let useMemory = false;
   try {
     await connectDB();
   } catch (err) {
-    return res.status(500).json({ success: false, message: 'Database connection failed', error: err.message });
+    console.error('DB connection error (fallback to memory):', err.message);
+    useMemory = true;
+  }
+
+  // In memory mode we allow any string ID (since we generate ObjectIds but want graceful)
+  if (!useMemory && !mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(400).json({ success: false, message: 'Invalid blog ID' });
   }
 
   if (req.method === 'GET') {
     try {
+      if (useMemory) {
+        const blog = getInMemoryBlogs().find(b => b._id === id);
+        if (!blog) return res.status(404).json({ success: false, message: 'Blog not found' });
+        return res.status(200).json({ success: true, data: blog, source: 'memory' });
+      }
       const blog = await Blog.findById(id);
       if (!blog) return res.status(404).json({ success: false, message: 'Blog not found' });
       return res.status(200).json({ success: true, data: blog });
@@ -61,6 +70,25 @@ export default async function handler(req, res) {
       const errors = validateBlog(data);
       if (errors.length) {
         return res.status(400).json({ success: false, message: errors.join(', '), errors });
+      }
+      if (useMemory) {
+        const store = getInMemoryBlogs();
+        const idx = store.findIndex(b => b._id === id);
+        if (idx === -1) return res.status(404).json({ success: false, message: 'Blog not found' });
+        store[idx] = {
+          ...store[idx],
+          title: data.title.trim(),
+          description: data.description.trim(),
+          content: data.content,
+          author: data.author.trim(),
+          category: data.category,
+          coverImage: data.coverImage.trim(),
+          tags: Array.isArray(data.tags) ? data.tags : [],
+          readTime: data.readTime.trim(),
+          publishedDate: new Date(data.publishedDate),
+          updatedAt: new Date(),
+        };
+        return res.status(200).json({ success: true, data: store[idx], source: 'memory' });
       }
       const blog = await Blog.findByIdAndUpdate(
         id,
@@ -90,6 +118,13 @@ export default async function handler(req, res) {
 
   if (req.method === 'DELETE') {
     try {
+      if (useMemory) {
+        const store = getInMemoryBlogs();
+        const idx = store.findIndex(b => b._id === id);
+        if (idx === -1) return res.status(404).json({ success: false, message: 'Blog not found' });
+        const [deleted] = store.splice(idx, 1);
+        return res.status(200).json({ success: true, message: 'Blog deleted successfully', data: deleted, source: 'memory' });
+      }
       const blog = await Blog.findByIdAndDelete(id);
       if (!blog) return res.status(404).json({ success: false, message: 'Blog not found' });
       return res.status(200).json({ success: true, message: 'Blog deleted successfully', data: blog });
