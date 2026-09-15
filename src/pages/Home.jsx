@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { ArrowRight, ArrowUpRight, PenLine, Mail } from 'lucide-react';
+import { ArrowRight, ArrowUpRight, PenLine, Mail, Clock, Calendar, User } from 'lucide-react';
 import useBlogs from '../hooks/useBlogs';
 import BlogGrid from '../components/BlogGrid';
 import { SkeletonGrid } from '../components/LoadingSpinner';
@@ -71,38 +71,77 @@ export default function Home() {
 
             </div>
 
-            {/* Right editorial stack */}
+            {/* Right editorial stack - DYNAMIC (replaces static Editor's Pick) */}
             <div className="relative lg:sticky lg:top-24 space-y-4 w-full">
-              <div className="bg-ink-900 text-white rounded-[28px] p-6 sm:p-7 border-2 border-ink-900 shadow-hard overflow-hidden relative">
-                <div className="absolute -top-10 -right-10 w-40 h-40 bg-mustard rounded-full blur-3xl opacity-20" />
-                <div className="absolute top-0 right-0 bg-mustard text-ink-900 text-[11px] font-black uppercase tracking-widest px-3 py-1 rounded-bl-2xl border-l-2 border-b-2 border-ink-900">Editor’s Pick</div>
-                <p className="text-[11px] font-black uppercase tracking-[0.18em] text-mustard mt-4">Featured Insight</p>
-                <h3 className="font-display font-black text-[22px] leading-tight mt-3">“The best way to predict the future is to create it — with clean code, thoughtful design, and continuous learning.”</h3>
-                <div className="flex items-center gap-3 mt-6">
-                  <img src="https://i.pravatar.cc/100?img=12" alt="author" className="w-10 h-10 rounded-full border-2 border-white" />
-                  <div className="flex-1 min-w-0">
-                    <p className="text-sm font-black">Sarah Chen</p>
-                    <p className="text-xs font-bold uppercase tracking-widest text-zinc-400">Senior Frontend Engineer</p>
-                  </div>
+              {loading ? (
+                <div className="bg-ink-900 rounded-[28px] p-6 sm:p-7 border-2 border-ink-900 shadow-hard h-[340px] animate-pulse" />
+              ) : error ? (
+                <div className="bg-white border-2 border-ink-900 rounded-[28px] p-6 text-center">
+                  <p className="text-sm font-bold text-zinc-600">Failed to load featured content</p>
+                  <button onClick={refetch} className="mt-2 text-xs font-black uppercase tracking-widest text-accent">Retry</button>
                 </div>
-                <div className="grid grid-cols-3 gap-4 mt-6 pt-5 border-t border-white/15 text-center divide-x divide-white/10">
-                  <div className="px-2"><p className="text-xl font-black leading-none">4.9</p><p className="text-[11px] font-bold uppercase tracking-widest text-zinc-400 mt-1">Rating</p></div>
-                  <div className="px-2"><p className="text-xl font-black leading-none">2.4k</p><p className="text-[11px] font-bold uppercase tracking-widest text-zinc-400 mt-1">Reads</p></div>
-                  <div className="px-2"><p className="text-xl font-black leading-none">98%</p><p className="text-[11px] font-bold uppercase tracking-widest text-zinc-400 mt-1">Helpful</p></div>
+              ) : blogs.length > 0 ? (
+                <>
+                  {(() => {
+                    const editorPick = blogs[0];
+                    const trending = blogs[1];
+                    const upNext = blogs[2];
+                    const totalAuthors = new Set(blogs.map(b => b.author)).size;
+                    const date = new Date(editorPick.publishedDate || editorPick.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+                    return (
+                      <>
+                        <Link to={`/blogs/${editorPick._id}`} className="group block bg-ink-900 text-white rounded-[28px] p-6 sm:p-7 border-2 border-ink-900 shadow-hard overflow-hidden relative hover:translate-y-[-2px] hover:shadow-hard-lg transition-all">
+                          <div className="absolute -top-10 -right-10 w-40 h-40 bg-mustard rounded-full blur-3xl opacity-20 group-hover:opacity-30 transition-opacity" />
+                          <div className="absolute top-0 right-0 bg-mustard text-ink-900 text-[11px] font-black uppercase tracking-widest px-3 py-1 rounded-bl-2xl border-l-2 border-b-2 border-ink-900">Editor’s Pick</div>
+                          <p className="inline-flex items-center gap-1.5 text-[11px] font-black uppercase tracking-widest text-mustard mt-4">
+                            <span className="w-1.5 h-1.5 bg-mustard rounded-full animate-pulse" /> {editorPick.category}
+                          </p>
+                          <h3 className="font-display font-black text-[22px] leading-tight mt-2 line-clamp-3 group-hover:text-mustard transition-colors">{editorPick.title}</h3>
+                          <p className="text-[13px] leading-relaxed text-zinc-300 mt-2 line-clamp-2">{editorPick.description}</p>
+                          <div className="flex items-center gap-3 mt-5">
+                            <img src={`https://i.pravatar.cc/100?u=${editorPick.author}`} alt={editorPick.author} className="w-10 h-10 rounded-full border-2 border-white object-cover" />
+                            <div className="flex-1 min-w-0">
+                              <p className="text-sm font-black flex items-center gap-1 truncate"><User className="w-3 h-3 text-zinc-400" />{editorPick.author}</p>
+                              <p className="text-xs font-bold uppercase tracking-widest text-zinc-400 flex items-center gap-1.5"><Clock className="w-3 h-3" />{editorPick.readTime} • <Calendar className="w-3 h-3" />{date}</p>
+                            </div>
+                          </div>
+                          <div className="grid grid-cols-3 gap-2 mt-6 pt-5 border-t border-white/15 text-center divide-x divide-white/10">
+                            <div className="px-1"><p className="text-xl font-black leading-none">{blogs.length}</p><p className="text-[11px] font-bold uppercase tracking-widest text-zinc-400 mt-1">Articles</p></div>
+                            <div className="px-1"><p className="text-xl font-black leading-none">{totalAuthors}</p><p className="text-[11px] font-bold uppercase tracking-widest text-zinc-400 mt-1">Authors</p></div>
+                            <div className="px-1"><p className="text-xl font-black leading-none">{categories.length}</p><p className="text-[11px] font-bold uppercase tracking-widest text-zinc-400 mt-1">Topics</p></div>
+                          </div>
+                        </Link>
+                        <div className="grid grid-cols-2 gap-3 items-stretch w-full">
+                          {trending ? (
+                            <Link to={`/blogs/${trending._id}`} className="group bg-mustard border-2 border-ink-900 rounded-[20px] p-4 shadow-hard-sm flex flex-col justify-center h-full min-h-[96px] hover:translate-y-[-1px] hover:shadow-hard transition-all">
+                              <p className="text-[11px] font-black uppercase tracking-widest leading-none flex items-center gap-1">🔥 Trending Now</p>
+                              <p className="font-display font-black text-[15px] leading-tight mt-1.5 line-clamp-2 group-hover:underline">{trending.title}</p>
+                              <p className="text-xs font-bold text-zinc-700 mt-1 truncate">{trending.category} • {trending.readTime}</p>
+                            </Link>
+                          ) : (
+                            <div className="bg-mustard border-2 border-ink-900 rounded-[20px] p-4 h-full min-h-[96px] opacity-50" />
+                          )}
+                          {upNext ? (
+                            <Link to={`/blogs/${upNext._id}`} className="group bg-white border-2 border-ink-900 rounded-[20px] p-4 shadow-hard-sm flex flex-col justify-center h-full min-h-[96px] hover:translate-y-[-1px] hover:shadow-hard transition-all">
+                              <p className="text-[11px] font-black uppercase tracking-widest leading-none text-accent">Up Next</p>
+                              <p className="font-black text-[13px] leading-tight mt-1.5 line-clamp-2 group-hover:text-accent transition-colors">{upNext.title}</p>
+                              <p className="text-xs font-medium text-zinc-500 mt-1 truncate">{upNext.category} • {upNext.readTime}</p>
+                            </Link>
+                          ) : (
+                            <div className="bg-white border-2 border-ink-900 rounded-[20px] p-4 h-full min-h-[96px] opacity-50" />
+                          )}
+                        </div>
+                      </>
+                    );
+                  })()}
+                </>
+              ) : (
+                <div className="bg-white border-2 border-ink-900 rounded-[28px] p-8 text-center shadow-hard">
+                  <p className="font-black">No articles yet</p>
+                  <p className="text-xs text-zinc-500 mt-1">Be the first to publish</p>
+                  <Link to="/create-blog" className="inline-flex mt-3 px-4 py-2 bg-ink-900 text-white rounded-full text-xs font-black uppercase tracking-widest">Write Story</Link>
                 </div>
-              </div>
-              <div className="grid grid-cols-2 gap-3 items-stretch w-full">
-                <div className="bg-mustard border-2 border-ink-900 rounded-[20px] p-4 shadow-hard-sm flex flex-col justify-center h-full min-h-[96px]">
-                  <p className="text-[11px] font-black uppercase tracking-widest leading-none">Trending Now</p>
-                  <p className="font-display font-black text-[16px] leading-tight mt-1.5">React 19 is here</p>
-                  <p className="text-xs font-bold text-zinc-700 mt-1">1.2k reading now • 8 min</p>
-                </div>
-                <div className="bg-white border-2 border-ink-900 rounded-[20px] p-4 shadow-hard-sm flex flex-col justify-center h-full min-h-[96px]">
-                  <p className="text-[11px] font-black uppercase tracking-widest leading-none text-accent">Up Next</p>
-                  <p className="font-black text-sm leading-tight mt-1.5">CSS Container Queries</p>
-                  <p className="text-xs font-medium text-zinc-500 mt-1">Tomorrow • 5 min</p>
-                </div>
-              </div>
+              )}
             </div>
           </div>
         </div>
