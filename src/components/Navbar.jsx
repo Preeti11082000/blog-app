@@ -21,7 +21,7 @@ export default function Navbar() {
             </div>
             <div className="flex flex-col leading-none">
               <span className="font-display font-black text-[22px] tracking-[-0.04em] leading-none">Inkwell<span className="text-accent">.</span></span>
-              <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-zinc-500 -mt-0.5">Est. 2024 — Journal</span>
+              <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-zinc-500 -mt-0.5">Est. 2026 — Journal</span>
             </div>
           </Link>
 

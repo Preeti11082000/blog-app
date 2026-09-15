@@ -21,7 +21,7 @@ export default function Footer() {
               </div>
               <div className="flex flex-col leading-none">
                 <span className="font-display font-black text-[24px] tracking-tight text-white leading-none">Inkwell<span className="text-mustard">.</span></span>
-                <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-zinc-400 leading-none">Est. 2024 — Journal</span>
+                <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-zinc-400 leading-none">Est. 2026 — Journal</span>
               </div>
             </div>
             <p className="text-sm text-zinc-400 max-w-md leading-relaxed font-medium">
