@@ -72,36 +72,35 @@ export default function Home() {
             </div>
 
             {/* Right editorial stack */}
-            <div className="relative lg:sticky lg:top-24 space-y-4">
-              <div className="bg-ink-900 text-white rounded-[28px] p-6 sm:p-7 border-2 border-ink-900 shadow-hard overflow-hidden relative rotate-[0.7deg]">
+            <div className="relative lg:sticky lg:top-24 space-y-4 w-full">
+              <div className="bg-ink-900 text-white rounded-[28px] p-6 sm:p-7 border-2 border-ink-900 shadow-hard overflow-hidden relative">
                 <div className="absolute -top-10 -right-10 w-40 h-40 bg-mustard rounded-full blur-3xl opacity-20" />
                 <div className="absolute top-0 right-0 bg-mustard text-ink-900 text-[11px] font-black uppercase tracking-widest px-3 py-1 rounded-bl-2xl border-l-2 border-b-2 border-ink-900">Editor’s Pick</div>
                 <p className="text-[11px] font-black uppercase tracking-[0.18em] text-mustard mt-4">Featured Insight</p>
                 <h3 className="font-display font-black text-[22px] leading-tight mt-3">“The best way to predict the future is to create it — with clean code, thoughtful design, and continuous learning.”</h3>
                 <div className="flex items-center gap-3 mt-6">
                   <img src="https://i.pravatar.cc/100?img=12" alt="author" className="w-10 h-10 rounded-full border-2 border-white" />
-                  <div>
+                  <div className="flex-1 min-w-0">
                     <p className="text-sm font-black">Sarah Chen</p>
                     <p className="text-xs font-bold uppercase tracking-widest text-zinc-400">Senior Frontend Engineer</p>
                   </div>
-                  <span className="ml-auto w-8 h-8 bg-white text-ink-900 rounded-full flex items-center justify-center"><ArrowUpRight className="w-4 h-4" /></span>
                 </div>
-                <div className="grid grid-cols-3 gap-4 mt-6 pt-5 border-t border-white/15 text-center">
-                  <div><p className="text-xl font-black">4.9</p><p className="text-[11px] font-bold uppercase tracking-widest text-zinc-400">Rating</p></div>
-                  <div><p className="text-xl font-black">2.4k</p><p className="text-[11px] font-bold uppercase tracking-widest text-zinc-400">Reads</p></div>
-                  <div><p className="text-xl font-black">98%</p><p className="text-[11px] font-bold uppercase tracking-widest text-zinc-400">Helpful</p></div>
+                <div className="grid grid-cols-3 gap-4 mt-6 pt-5 border-t border-white/15 text-center divide-x divide-white/10">
+                  <div className="px-2"><p className="text-xl font-black leading-none">4.9</p><p className="text-[11px] font-bold uppercase tracking-widest text-zinc-400 mt-1">Rating</p></div>
+                  <div className="px-2"><p className="text-xl font-black leading-none">2.4k</p><p className="text-[11px] font-bold uppercase tracking-widest text-zinc-400 mt-1">Reads</p></div>
+                  <div className="px-2"><p className="text-xl font-black leading-none">98%</p><p className="text-[11px] font-bold uppercase tracking-widest text-zinc-400 mt-1">Helpful</p></div>
                 </div>
               </div>
-              <div className="grid grid-cols-2 gap-4 items-stretch">
-                <div className="bg-mustard border-2 border-ink-900 rounded-[20px] p-4 shadow-hard-sm flex flex-col justify-center min-h-[96px]">
-                  <p className="text-[11px] font-black uppercase tracking-widest">Trending Now</p>
-                  <p className="font-display font-black text-[16px] leading-tight mt-1">React 19 is here</p>
-                  <p className="text-xs font-bold text-zinc-700">1.2k reading now • 8 min</p>
+              <div className="grid grid-cols-2 gap-3 items-stretch w-full">
+                <div className="bg-mustard border-2 border-ink-900 rounded-[20px] p-4 shadow-hard-sm flex flex-col justify-center h-full min-h-[96px]">
+                  <p className="text-[11px] font-black uppercase tracking-widest leading-none">Trending Now</p>
+                  <p className="font-display font-black text-[16px] leading-tight mt-1.5">React 19 is here</p>
+                  <p className="text-xs font-bold text-zinc-700 mt-1">1.2k reading now • 8 min</p>
                 </div>
-                <div className="bg-white border-2 border-ink-900 rounded-[20px] p-4 shadow-hard-sm flex flex-col justify-center min-h-[96px]">
-                  <p className="text-[11px] font-black uppercase tracking-widest text-accent">Up Next</p>
-                  <p className="font-black text-sm leading-tight">CSS Container Queries</p>
-                  <p className="text-xs font-medium text-zinc-500">Tomorrow • 5 min</p>
+                <div className="bg-white border-2 border-ink-900 rounded-[20px] p-4 shadow-hard-sm flex flex-col justify-center h-full min-h-[96px]">
+                  <p className="text-[11px] font-black uppercase tracking-widest leading-none text-accent">Up Next</p>
+                  <p className="font-black text-sm leading-tight mt-1.5">CSS Container Queries</p>
+                  <p className="text-xs font-medium text-zinc-500 mt-1">Tomorrow • 5 min</p>
                 </div>
               </div>
             </div>
