@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { BookOpen, Twitter, Github, Linkedin, Mail, ArrowUpRight } from 'lucide-react';
+import { ArrowUpRight } from 'lucide-react';
 
 export default function Footer() {
   return (
@@ -27,12 +27,6 @@ export default function Footer() {
             <p className="text-sm text-zinc-400 max-w-md leading-relaxed font-medium">
               A modern publishing platform for developers, designers and thinkers. Share ideas, stories and insights with a community that cares about craft — not content mills.
             </p>
-            <div className="flex gap-2.5 mt-6">
-              <a href="#" className="w-10 h-10 rounded-full bg-white text-ink-900 border-2 border-white flex items-center justify-center hover:bg-mustard transition-colors"><Twitter className="w-4 h-4" /></a>
-              <a href="#" className="w-10 h-10 rounded-full bg-transparent border-2 border-white/20 text-white flex items-center justify-center hover:bg-white hover:text-ink-900 transition-colors"><Github className="w-4 h-4" /></a>
-              <a href="#" className="w-10 h-10 rounded-full bg-transparent border-2 border-white/20 text-white flex items-center justify-center hover:bg-white hover:text-ink-900 transition-colors"><Linkedin className="w-4 h-4" /></a>
-              <a href="#" className="w-10 h-10 rounded-full bg-accent border-2 border-white text-white flex items-center justify-center hover:bg-accent-light transition-colors"><Mail className="w-4 h-4" /></a>
-            </div>
           </div>
           <div className="md:col-span-3">
             <h4 className="text-white font-black uppercase tracking-widest text-xs flex items-center gap-2"><span className="w-6 h-0.5 bg-mustard" /> Navigation</h4>
